@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 
-
-export default class AppRoot extends Component {
+export default class App extends Component {
   render() {
     return (
       <div>
@@ -11,5 +9,3 @@ export default class AppRoot extends Component {
     );
   }
 }
-
-ReactDOM.render(<AppRoot />, document.getElementById('root'));

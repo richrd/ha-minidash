@@ -2,6 +2,7 @@
 const path = require('path');
 
 // Externals
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 
@@ -16,11 +17,11 @@ const paths = {
 
 // Webpack configuration
 module.exports = {
-  //entry: path.join(paths.JS, 'app.js'),
 
   entry: {
     app: [
-      path.join(paths.JS, 'app.js'),
+      'react-hot-loader/patch',
+      path.join(paths.JS, 'index.jsx'),
       path.join(paths.CSS, 'index.sass'),
     ],
   },
@@ -28,9 +29,14 @@ module.exports = {
 
   output: {
     path: paths.DIST,
-    filename: 'app.bundle.js',
+    filename: '[name].[hash].js',
   },
 
+
+  // Enable importing files without specifying their's extenstion
+  resolve: {
+    extensions: ['.js', '.jsx', '.sass', '.scss'],
+  },
 
   // Use the html plugin to inject necessary stuff into index.html
   plugins: [
@@ -39,8 +45,8 @@ module.exports = {
       inject: 'body',
       filename: 'index.html',
     }),
+    new webpack.NamedModulesPlugin(),
   ],
-
 
   // Loaders configuration
   // Use "babel-loader" for .js and .jsx files
@@ -61,13 +67,15 @@ module.exports = {
           'css-loader',
           'sass-loader',
         ],
-      }
+      },
     ],
   },
 
 
-  // Enable importing files without specifying their's extenstion
-  resolve: {
-    extensions: ['.js', '.jsx', '.sass', '.scss'],
+  devServer: {
+    host: '0.0.0.0',
+    disableHostCheck: true,
+    hot: true,
   },
+
 };
