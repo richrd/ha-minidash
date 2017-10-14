@@ -10,24 +10,41 @@ const paths = {
   DIST: path.resolve(__dirname, 'dist'),
   SRC: path.resolve(__dirname, 'src'),
   JS: path.resolve(__dirname, 'src/js'),
+  CSS: path.resolve(__dirname, 'src/css'),
 };
+
 
 // Webpack configuration
 module.exports = {
-  entry: path.join(paths.JS, 'app.js'),
+  //entry: path.join(paths.JS, 'app.js'),
+
+  entry: {
+    app: [
+      path.join(paths.JS, 'app.js'),
+      path.join(paths.CSS, 'index.sass'),
+    ],
+  },
+
+
   output: {
     path: paths.DIST,
     filename: 'app.bundle.js',
   },
+
+
   // Use the html plugin to inject necessary stuff into index.html
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(paths.SRC, 'index.html'),
+      inject: 'body',
+      filename: 'index.html',
     }),
   ],
 
+
   // Loaders configuration
-  // We are telling webpack to use "babel-loader" for .js and .jsx files
+  // Use "babel-loader" for .js and .jsx files
+  // Use css loaders for sass & scss
   module: {
     rules: [
       {
@@ -37,10 +54,20 @@ module.exports = {
           'babel-loader',
         ],
       },
+      {
+        test: /\.s[ac]ss$/,
+        loaders: [
+          'style-loader',
+          'css-loader',
+          'sass-loader',
+        ],
+      }
     ],
   },
-  // Enable importing JS files without specifying their's extenstion
+
+
+  // Enable importing files without specifying their's extenstion
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx', '.sass', '.scss'],
   },
 };
