@@ -20,6 +20,7 @@ module.exports = {
 
   entry: {
     app: [
+      'babel-polyfill',
       'react-hot-loader/patch',
       path.join(paths.JS, 'index.jsx'),
       path.join(paths.CSS, 'index.sass'),
@@ -30,6 +31,7 @@ module.exports = {
   output: {
     path: paths.DIST,
     filename: '[name].[hash].js',
+    publicPath: '/public/',
   },
 
 
@@ -38,15 +40,17 @@ module.exports = {
     extensions: ['.js', '.jsx', '.sass', '.scss'],
   },
 
+
   // Use the html plugin to inject necessary stuff into index.html
   plugins: [
+    new webpack.NamedModulesPlugin(),
     new HtmlWebpackPlugin({
       template: path.join(paths.SRC, 'index.html'),
       inject: 'body',
       filename: 'index.html',
     }),
-    new webpack.NamedModulesPlugin(),
   ],
+
 
   // Loaders configuration
   // Use "babel-loader" for .js and .jsx files
@@ -76,6 +80,8 @@ module.exports = {
     host: '0.0.0.0',
     disableHostCheck: true,
     hot: true,
+    contentBase: path.resolve(__dirname, 'public/'),
+    publicPath: '/',
   },
 
 };
