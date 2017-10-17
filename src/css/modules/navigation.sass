@@ -1,0 +1,95 @@
+#navigation
+  .nav-menu
+    border-right: 1px solid $color-panel-border
+    width: 280px
+    position: absolute
+    top: 0
+    bottom: 0
+    background-color: $color-panel-background
+    overflow: hidden
+    display: flex
+    flex-direction: column
+
+    transition: transform .2s ease-in-out
+    transform: translate(-280px, 0)
+    z-index: 11
+
+    .nav-top
+      flex-shrink: 0
+      height: $header-bar-height
+      background-color: $color-background
+
+      h1
+        font-size: 18px
+        font-weight: inherit
+        margin: 0
+        padding: 0
+
+    .nav-content
+      flex-grow: 1
+      overflow-y: auto
+
+    .nav-items
+      list-style: none
+      padding: 0
+      margin: 0
+      display: flex
+      flex-direction: column
+
+      li
+        display: block
+
+        &.header
+          padding: $sizer $sizer
+          color: $color-text-dim
+          background-color: $color-nav-subheading-background
+
+          h2
+            font-size: .75em
+            text-transform: uppercase
+            text-align: center
+            font-weight: inherit
+            margin: 0
+            padding: 0
+
+        a
+          display: flex
+          align-items: center
+          padding: $sizer*2 $sizer
+          border-bottom: 1px solid $color-panel-border
+          border-left: 4px solid transparent
+
+          &.active
+            color: $color-highlight-text
+            border-left: 4px solid $color-highlight-text
+
+          .mdi
+            margin-right: $sizer
+
+
+        .icon
+          margin-right: $sizer/2
+
+
+  .nav-backdrop
+    position: absolute
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+
+    background-color: $color-backdrop
+    z-index: 10
+    pointer-events: none
+    opacity: 0
+    transition: opacity .2s ease-in-out
+
+.navigation-open #navigation
+  .nav-menu
+    transition: transform .2s ease-in-out
+    transform: translate(0, 0)
+
+  .nav-backdrop
+    pointer-events: all
+    opacity: .7
+    transition: opacity .2s ease-in-out

@@ -1,10 +1,18 @@
 export class HaWebsocket {
-  constructor(apiUrl, password = null) {
+  constructor(apiUrl, password = null, debug = false) {
     this.apiUrl = apiUrl;
     this.socket = null;
     this.reconnectTimeout = 1000;
     this.password = password;
     this.msgListeners = [];
+    this.debug = debug;
+    this.msgId = 1;
+  }
+
+  logToConsole(...args) {
+    if (this.debug) {
+      console.log(...args);
+    }
   }
 
   async connect() {
@@ -14,26 +22,26 @@ export class HaWebsocket {
       const wsProtocol = apiProtocol === 'https' ? 'wss' : 'ws';
       const wsUrl = `${wsProtocol}://${domain}/api/websocket`;
 
-      console.log(`Connecting to websocket (${wsUrl})...`);
+      this.logToConsole(`Connecting to websocket (${wsUrl})...`);
 
       this.socket = new WebSocket(wsUrl);
       this.socket.onopen = () => {
-        console.log('Websocket is open');
+        this.logToConsole('Websocket is open');
         resolve();
       };
 
       this.socket.onmessage = (event) => {
         const message = JSON.parse(event.data);
-        console.log('%c Websocket message: %s %O', 'font-size:7px; color: #555', event.data, event );
+        this.logToConsole('%c Websocket message: %s %O', 'font-size:7px; color: #555', event.data, event);
 
         if (message.type) {
           if (message.type === 'auth_required') {
             this.authorize();
           } else if (message.type === 'auth_ok') {
-            console.log('Authentication successfull!');
+            this.logToConsole('Authentication successfull!');
             this.subscribeToEvents();
           } else if (message.type === 'auth_invalid') {
-            console.log('Authentication invalid!');
+            this.logToConsole('Authentication invalid!');
           }
         }
 
@@ -42,6 +50,7 @@ export class HaWebsocket {
 
       this.socket.onerror = (event) => {
         console.error('API ERROR', event);
+        reject(event);
       };
     });
   }
@@ -58,12 +67,14 @@ export class HaWebsocket {
   }
 
   async send(obj) {
+    this.logToConsole('SENDING:', obj);
+    obj.id = this.msgId;
+    this.msgId = this.msgId + 1;
     this.socket.send(JSON.stringify(obj));
   }
 
   async subscribeToEvents() {
     this.send({
-      id: 1,
       type: 'subscribe_events',
     });
   }
@@ -116,4 +127,46 @@ export function getConfig(url, password) {
   return fetch(`${url}/api/config?api_password=${password}`)
     .then(res => res.json())
     .catch(err => console.log(err));
+}
+
+export function toggleEntityState(entity) {
+  return (dispatch, getState) => {
+    dispatch({
+      type: 'SET_ENTITY_STATE',
+      data: entity,
+    });
+
+    const [domain] = entity.entity_id.split('.');
+
+    getState()
+      .connection.get('websocket')
+      .send({
+        id: 2,
+        type: 'call_service',
+        domain,
+        service: 'toggle',
+        service_data: {
+          entity_id: entity.entity_id,
+        },
+      });
+  };
+}
+
+
+export function setSliderValue(entity, value) {
+  return (dispatch, getState) => {
+    const [domain] = entity.entity_id.split('.');
+
+    getState()
+      .connection.get('websocket')
+      .send({
+        type: 'call_service',
+        domain,
+        service: 'select_value',
+        service_data: {
+          value,
+          entity_id: entity.entity_id,
+        },
+      });
+  };
 }

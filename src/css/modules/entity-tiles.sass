@@ -1,0 +1,82 @@
+$tile-width: 6.5rem
+$tile-height: 6.5rem
+
+.entity-tiles
+  height: 100%
+  margin: 0 auto
+  display: inline-flex
+  flex-wrap: wrap
+  align-content: flex-start
+  justify-content: space-around
+  padding: $sizer/2
+
+
+.entity-tile
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0)
+  margin: $sizer/2
+  vertical-align: top
+  background-color: $color-panel-background
+
+  width: $tile-width
+  height: $tile-height
+  padding: .4em
+
+  text-align: center
+  cursor: pointer
+
+  display: flex
+  flex-grow: 1
+  flex-direction: column
+  align-items: center
+  justify-content: center
+
+  .tile-label
+    font-size: .8rem
+    max-width: 100%
+    white-space: nowrap
+    overflow: hidden
+    text-overflow: ellipsis
+    color: $color-text-dim
+
+  .tile-content
+    color: $color-highlight-text
+    overflow-y: hidden
+    display: flex
+    align-items: center
+    flex-grow: 7
+
+    .tile-value,
+    .tile-unit
+        display: inline-block
+        vertical-align: middle
+
+    .tile-value
+        font-size: 1.75em
+
+    .tile-unit
+        vertical-align: top
+
+
+  .tile-icon
+    display: inline-block;
+    font-size: 3rem;
+    color: #888888;
+    display: flex;
+    align-items: center;
+    flex-grow: 7;
+    .mdi:before
+      font-size: inherit
+
+  &[data-state='on'] .tile-icon
+    color: $color-highlight-icon
+
+  &[data-type='input_slider']
+    width: calc(#{$tile-width} * 2 + #{$sizer})
+    .tile-content
+      width: 100%
+    .slider
+      height: 2rem
+      padding: 0 $sizer * 2
+      margin: $sizer/2 0
+      .min, .max
+        color: $color-text-dim

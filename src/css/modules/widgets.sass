@@ -1,0 +1,27 @@
+.progress-circle
+  position: relative
+  display: flex
+  align-items: center
+  justify-content: center
+
+  .value
+    position: absolute
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    z-index: 1
+
+  .progress-svg
+    transform: rotate(-90deg)
+
+    .track,
+    .value
+      fill: none
+
+    .track
+      stroke: $color-background
+
+    .value
+      stroke: $color-highlight
+      stroke-linecap: round

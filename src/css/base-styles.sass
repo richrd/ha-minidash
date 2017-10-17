@@ -1,0 +1,136 @@
+
+/*
+ * Webkit scrollbars
+ */
+
+::-webkit-scrollbar
+  width: 12px
+  background-color: $color-panel-background
+
+::-webkit-scrollbar-thumb
+  border-radius: 4px
+  background: $color-background
+  border: 2px solid $color-panel-background
+
+a
+  color: inherit
+  text-decoration: inherit
+
+i
+  font-style: normal
+
+pre
+  overflow: auto
+
+
+
+
+
+
+ul, dl
+  margin: 0
+  padding: 0
+
+  dt, dd
+    margin: 0
+    padding: 0
+
+
+// Extra sizes for Material Icons
+.mdi-72px.mdi-set, .mdi-72px.mdi::before
+  font-size: 72px
+
+.mdi-96px.mdi-set, .mdi-96px.mdi::before
+  font-size: 96px
+
+.mdi-144px.mdi-set, .mdi-144px.mdi::before
+  font-size: 144px
+
+
+
+button, input
+  outline: 0 none transparent
+
+button::-moz-focus-inner, input::-moz-focus-inner
+  border: 0
+
+button
+  border: 0 solid transparent
+  outline: none
+  cursor: pointer
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0)
+
+button.btn-plain
+  padding: 0
+  background: inherit
+  display: inline-flex
+  flex-direction: column
+  align-items: center
+  justify-content: center
+  color: inherit
+
+
+
+
+
+input[type=range]
+  -webkit-appearance: none /* Hides the slider so that custom slider can be made */
+  width: 100%
+  background: transparent
+  margin: 0 $sizer*2
+
+input[type=range]::-webkit-slider-runnable-track
+  width: 100%
+  height: 5px
+  cursor: pointer
+  background: $color-background
+  border-radius: 2.5px
+
+input[type=range]::-moz-range-track
+  width: 100%
+  height: 5px
+  cursor: pointer
+  background: $color-background
+  border-radius: 2.5px
+  outline: 0
+
+input[type='range']::-moz-focus-outer
+  border: 0
+
+input[type=range]:focus::-moz-range-track
+  outline: 0
+
+input[type=range]::-webkit-slider-thumb
+  -webkit-appearance: none
+  display: block
+  border: 3px solid $color-background
+  margin-top: calc(-.9rem + 1.5px)
+  width: 1.8rem
+  height: 1.8rem
+  border-radius: 100%
+  background-color: $color-panel-background
+
+input[type=range]::-moz-range-thumb
+  display: block
+  border: 3px solid $color-background
+  width: 1.5rem
+  height: 1.5rem
+  border-radius: 100%
+  background-color: $color-panel-background
+
+input[type=range]:focus
+  outline: none /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+
+input[type=range]::-ms-track
+  width: 100%
+  cursor: pointer
+
+  /* Hides the slider so custom styles can be added */
+  background: transparent 
+  border-color: transparent
+  color: transparent
+
+
+
+
+
