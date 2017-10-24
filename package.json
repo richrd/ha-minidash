@@ -27,7 +27,7 @@
     "url-loader": "^0.6.2"
   },
   "scripts": {
-    "build": "webpack",
+    "build": "NODE_ENV=protuction webpack --p",
     "dev": "webpack-dev-server --hot --open --history-api-fallback"
   },
   "dependencies": {
