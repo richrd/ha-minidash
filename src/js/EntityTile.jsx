@@ -15,9 +15,7 @@ import RadialProgress from './partials/RadialProgress';
 import EntityInputNumber from './partials/EntityInputNumber';
 import EntityInputText from './partials/EntityInputText';
 
-function EntityTile({
-  entity, toggle,
-}) {
+function EntityTile({ entity, toggle }) {
   if (!entity) {
     return null;
   }
@@ -32,9 +30,18 @@ function EntityTile({
   const isShortValue = valLength < 6;
   const iconlessDomains = ['sensor', 'input_text', 'input_number'];
 
+
   const clickEntity = () => {
     if (entityIsToggleable(entity)) {
       toggle(entity);
+    }
+  };
+
+  const keyPress = (evt) => {
+    const key = evt.key.toLowerCase();
+    const keys = ['enter', ' '];
+    if (keys.includes(key)) {
+      clickEntity();
     }
   };
 
@@ -46,6 +53,7 @@ function EntityTile({
       data-type={type}
       data-short-value={isShortValue}
       onClick={clickEntity}
+      onKeyPress={keyPress}
       role="button"
       tabIndex="0"
     >
@@ -70,7 +78,6 @@ function EntityTile({
         </div>
       : null }
 
-
       { type === 'input_text' ?
         <div className="tile-content">
           <EntityInputText entity={entity} />
@@ -83,7 +90,6 @@ function EntityTile({
       }
 
     </div>
-
   );
 }
 
