@@ -1,7 +1,7 @@
 #navigation
   .nav-menu
     border-right: 1px solid $color-panel-border
-    width: 280px
+    width: $nav-width
     position: absolute
     top: 0
     bottom: 0
@@ -11,7 +11,7 @@
     flex-direction: column
 
     transition: transform .2s ease-in-out
-    transform: translate(-280px, 0)
+    transform: translate(#{$nav-width * -1}, 0)
     z-index: 11
 
     .nav-top
@@ -41,7 +41,7 @@
 
         &.header
           padding: $sizer $sizer
-          color: $color-text-dim
+          color: $color-dim-text
           background-color: $color-nav-subheading-background
 
           h2
