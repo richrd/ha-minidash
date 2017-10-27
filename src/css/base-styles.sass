@@ -105,6 +105,9 @@ input[type=range]
     border-radius: 100%
     background-color: $color-panel-background
 
+  &:focus::-webkit-slider-thumb
+    background-color: $color-tile-highlight-icon
+
   &::-moz-range-thumb
     display: block
     border: 3px solid $color-background
@@ -112,6 +115,9 @@ input[type=range]
     height: 1.8rem
     border-radius: 100%
     background-color: $color-panel-background
+
+  &:focus::-moz-range-thumb
+    border-color: $color-tile-highlight-icon
 
   &:focus
     outline: none
