@@ -1,0 +1,89 @@
+// Text
+.text-center
+  text-align: center
+
+// Size
+.h-100
+  height: 100%
+
+.w-100
+  width: 100%
+
+// Padding
+@for $var from 1 through 3
+  .p-#{$var}
+    padding: $sizer * $var !important
+  .px-#{$var}
+    padding-left: $sizer * $var !important
+    padding-right: $sizer * $var !important
+  .py-#{$var}
+    padding-top: $sizer * $var !important
+    padding-bottom: $sizer * $var !important
+  .pl-#{$var}
+    padding-left: $sizer * $var !important
+  .pr-#{$var}
+    padding-right: $sizer * $var !important
+  .pt-#{$var}
+    padding-top: $sizer * $var !important
+  .pb-#{$var}
+    padding-bottom: $sizer * $var !important
+
+
+// Margin
+@for $var from 1 through 3
+  .m-#{$var}
+    margin: $sizer * $var !important
+  .mx-#{$var}
+    margin-left: $sizer * $var !important
+    margin-right: $sizer * $var !important
+  .my-#{$var}
+    margin-top: $sizer * $var !important
+    margin-bottom: $sizer * $var !important
+  .ml-#{$var}
+    margin-left: $sizer * $var !important
+  .mr-#{$var}
+    margin-right: $sizer * $var !important
+  .mt-#{$var}
+    margin-top: $sizer * $var !important
+  .mb-#{$var}
+    margin-bottom: $sizer * $var !important
+
+
+// Display and Flexbox
+.d-flex
+  display: flex
+  align-items: center
+
+.fd-row
+  flex-direction: row
+
+.fd-col
+  flex-direction: column
+
+.jc-space-between
+  justify-content: space-between
+
+.jc-space-around
+  justify-content: space-around
+
+.flex-center
+  display: flex
+  align-items: center
+  justify-content: center
+
+.flex-stretch
+  flex-grow: 1
+  align-self: stretch
+  justify-self: stretch
+
+// Effects
+.pulse-opacity
+  animation: pulse-opacity 1s linear infinite
+
+@keyframes pulse-opacity
+ 0%
+   opacity: 1
+ 50%
+   opacity: .2
+ 100%
+   opacity: 1

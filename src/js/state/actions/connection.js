@@ -28,26 +28,45 @@ function configLoaded(data) {
   };
 }
 
+
+function setConnectionStatus(data) {
+  return (dispatch) => {
+    dispatch({
+      type: 'SET_CONNECTION_STATUS',
+      data,
+    });
+  };
+}
+
 export function tryConnect(url, password = null) {
   return async (dispatch) => {
-
-    // dispatch(loginRequest());
+    const reconnect = async () => {
+      await dispatch(setConnectionStatus('disconnected'));
+      await setTimeout(() => dispatch(tryConnect(url, password)), 1000);
+    };
 
     // Connect to api with password
     const connection = new HaWebsocket(url, password);
-    await connection.connect();
+    await dispatch(setConnectionStatus('connecting'));
 
-    // connection.onclose(() => dispatch(connectionClosed()));
+    // Connect and automatic reconnect
+    try {
+      await connection.connect();
+    } catch (err) {
+      reconnect();
+      return;
+    }
+    await dispatch(setConnectionStatus('connected'));
+
+    connection.socket.onclose = () => reconnect();
 
     try {
-      // await connection.authorize(password);
       await dispatch(setWebsocket(connection, password));
       await dispatch(bootstrapLoaded(await getBootstrap(url, password)));
       await dispatch(configLoaded(await getConfig(url, password)));
       await dispatch(subscribeToAllEvents());
     } catch (e) {
       console.warn('Login failure', e);
-      // dispatch(connectFailed());
       throw e;
     }
   };

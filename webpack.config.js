@@ -15,6 +15,13 @@ const paths = {
 };
 
 
+exports.fonts = {
+  test: /\.(eot|woff|woff2|ttf|svg)(\?[\s\S]+)?$/,
+  loader: 'url-loader?limit=1000&name=fonts/[name].[ext]',
+  exclude: /node_modules/,
+  include: [path.resolve(__dirname, '/node_modules/mdi/fonts')],
+};
+
 // Webpack configuration
 module.exports = {
 
@@ -24,6 +31,7 @@ module.exports = {
       'react-hot-loader/patch',
       path.join(paths.JS, 'index.jsx'),
       path.join(paths.CSS, 'index.sass'),
+      'mdi/css/materialdesignicons.css',
     ],
   },
 
@@ -31,7 +39,7 @@ module.exports = {
   output: {
     path: paths.DIST,
     filename: '[name].[hash].js',
-    publicPath: '/public/',
+    publicPath: '/',
   },
 
 
@@ -71,6 +79,17 @@ module.exports = {
           'css-loader',
           'sass-loader',
         ],
+      },
+      {
+        test: /\.css$/,
+        loaders: [
+          'style-loader',
+          'css-loader',
+        ],
+      },
+      {
+        test: /\.(eot|svg|ttf|woff|woff2)$/,
+        loader: 'file-loader?name=[name].[ext]',
       },
     ],
   },

@@ -3,7 +3,7 @@ import { Record } from 'immutable';
 
 const ConnectionState = Record({
   authorized: false,
-  connected: false,
+  status: 'disconnected',
   loginFailed: false,
   password: '',
   websocket: null,

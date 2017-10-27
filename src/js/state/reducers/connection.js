@@ -18,6 +18,9 @@ export default createReducer(new ConnectionState(), {
   },
 
 
+  SET_CONNECTION_STATUS: (state, data) => state.set('status', data),
+
+
   SUBSCRIBE_TO_EVENTS: (state, { callback }) => {
     state.get('websocket').addMessageListener(callback);
     return state;

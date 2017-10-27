@@ -6,9 +6,10 @@ import { Record, List, Map } from 'immutable';
 import { stateToProps } from './utilities';
 import { tryConnect } from './state/actions/connection';
 
-function StateViewer({ connection, config, entities }) {
+
+function StateView({ connection, config, entities }) {
   return (
-    <div>
+    <div className="p-1">
       <h3>connection</h3>
       <pre>
         {JSON.stringify(connection, null, 4)}
@@ -27,7 +28,7 @@ function StateViewer({ connection, config, entities }) {
   );
 }
 
-StateViewer.propTypes = {
+StateView.propTypes = {
   connection: PropTypes.instanceOf(Record).isRequired,
   config: PropTypes.instanceOf(Map).isRequired,
   entities: PropTypes.instanceOf(List).isRequired,
@@ -36,4 +37,4 @@ StateViewer.propTypes = {
 export default connect(
   stateToProps('connection', 'config', 'entities'),
   { tryConnect },
-)(StateViewer);
+)(StateView);

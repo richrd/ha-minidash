@@ -12,6 +12,9 @@
     "browser": true,
   },
   "rules": {
-    "no-console": "off"
+    "no-console": 0,
+    "no-param-reassign": 0,
+    "jsx-a11y/click-events-have-key-events": 0,
+    "import/prefer-default-export": 0
   }
 }
