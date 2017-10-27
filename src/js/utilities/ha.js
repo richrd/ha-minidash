@@ -15,7 +15,7 @@ export function getEntityDomain(entity) {
 export function getEntityIconWithState(entity) {
   const switchTypes = ['switch', 'input_boolean'];
 
-  let icon = 'circle';
+  let icon = 'checkbox-blank';
 
   const type = entity.entity_id.split('.')[0];
 
