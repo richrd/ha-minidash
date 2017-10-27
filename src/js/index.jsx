@@ -14,7 +14,6 @@ import configReducer from './state/reducers/config';
 
 import Root from './Root';
 
-require('style-loader!css-loader!mdi/css/materialdesignicons.css');
 
 const history = createHistory();
 const middleware = routerMiddleware(history);

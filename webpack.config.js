@@ -31,6 +31,7 @@ module.exports = {
       'react-hot-loader/patch',
       path.join(paths.JS, 'index.jsx'),
       path.join(paths.CSS, 'index.sass'),
+      'mdi/css/materialdesignicons.css'
     ],
   },
 
@@ -77,6 +78,13 @@ module.exports = {
           'style-loader',
           'css-loader',
           'sass-loader',
+        ],
+      },
+      {
+        test: /\.css$/,
+        loaders: [
+          'style-loader',
+          'css-loader',
         ],
       },
       {
