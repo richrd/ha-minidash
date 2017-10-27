@@ -33,9 +33,9 @@ class App extends Component {
     return (
       <div>
         <HeaderBar />
-        <div id="component-container">
+        <main id="component-container">
           {this.props.children}
-        </div>
+        </main>
       </div>
     );
   }
