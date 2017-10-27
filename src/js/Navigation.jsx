@@ -59,7 +59,7 @@ function Navigation({ connection, config, entities }) {
 
         <div className="nav-top d-flex fd-row px-1 jc-space-between">
           <h1><Icon name="home-assistant" /><span className="ml-1">{haLocation}</span></h1>
-          <button className="btn-plain h-100" onClick={toggleNavigation}>
+          <button className="btn-plain h-100 pl-3" onClick={toggleNavigation}>
             <Icon name="close" />
           </button>
         </div>

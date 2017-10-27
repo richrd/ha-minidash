@@ -10,53 +10,43 @@
   width: 100%
 
 // Padding
-.p-1
-  padding: $sizer
-
-.px-1
-  padding-left: $sizer
-  padding-right: $sizer
-
-.py-1
-  padding-top: $sizer
-  padding-bottom: $sizer
-
-.pl-1
-  padding-left: $sizer
-
-.pr-1
-  padding-right: $sizer
-
-.pt-1
-  padding-top: $sizer
-
-.pb-1
-  padding-bottom: $sizer
+@for $var from 1 through 3
+  .p-#{$var}
+    padding: $sizer * $var !important
+  .px-#{$var}
+    padding-left: $sizer * $var !important
+    padding-right: $sizer * $var !important
+  .py-#{$var}
+    padding-top: $sizer * $var !important
+    padding-bottom: $sizer * $var !important
+  .pl-#{$var}
+    padding-left: $sizer * $var !important
+  .pr-#{$var}
+    padding-right: $sizer * $var !important
+  .pt-#{$var}
+    padding-top: $sizer * $var !important
+  .pb-#{$var}
+    padding-bottom: $sizer * $var !important
 
 
 // Margin
-.m-1
-  margin: $sizer
-
-.mx-1
-  margin-left: $sizer
-  margin-right: $sizer
-
-.my-1
-  margin-top: $sizer
-  margin-bottom: $sizer
-
-.ml-1
-  margin-left: $sizer
-
-.mr-1
-  margin-right: $sizer
-
-.mt-1
-  margin-top: $sizer
-
-.mb-1
-  margin-bottom: $sizer
+@for $var from 1 through 3
+  .m-#{$var}
+    margin: $sizer * $var !important
+  .mx-#{$var}
+    margin-left: $sizer * $var !important
+    margin-right: $sizer * $var !important
+  .my-#{$var}
+    margin-top: $sizer * $var !important
+    margin-bottom: $sizer * $var !important
+  .ml-#{$var}
+    margin-left: $sizer * $var !important
+  .mr-#{$var}
+    margin-right: $sizer * $var !important
+  .mt-#{$var}
+    margin-top: $sizer * $var !important
+  .mb-#{$var}
+    margin-bottom: $sizer * $var !important
 
 
 // Display and Flexbox

@@ -14,7 +14,7 @@ function HeaderBar() {
   return (
     <header>
       <div id="header-bar" className="header-bar d-flex jc-space-between">
-        <button className="btn-plain h-100" alt="Menu" onClick={toggleNavigation} >
+        <button className="btn-plain h-100 pr-3" alt="Menu" onClick={toggleNavigation} >
           <Icon name="menu" />
         </button>
         <ConnectionIndicator />
