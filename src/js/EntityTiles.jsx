@@ -8,22 +8,17 @@ export default function EntityTiles({ entities }) {
   let tiles;
 
   if (entities) {
-    tiles = entities.map(entity => (
-      <EntityTile key={entity.entity_id} entity={entity} />));
+    tiles = entities.map((entity) => {
+      if (!entity) {
+        return null;
+      }
+      return <EntityTile key={entity.entity_id} entity={entity} />;
+    });
   }
 
   return (
-    <div className="entity-tiles">
+    <div className="entity-tiles layout-grid">
       {tiles}
-
-      {/*
-      <div className="spacer-tile" />
-      <div className="spacer-tile" />
-      <div className="spacer-tile" />
-      <div className="spacer-tile" />
-      <div className="spacer-tile" />
-      <div className="spacer-tile" />
-      */}
     </div>
   );
 }

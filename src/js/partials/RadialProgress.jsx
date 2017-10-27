@@ -3,9 +3,13 @@ import PropTypes from 'prop-types';
 
 
 export default function RadialProgress({ value }) {
-  const valueFormatted = parseInt(value, 10);
+  let valueFormatted = parseInt(value, 10);
+  if (isNaN(valueFormatted)) {
+    value = 0;
+    valueFormatted = '-';
+  }
   const radius = 28;
-  const trackWidth = 1;
+  const trackWidth = 2;
   const valueWidth = 3;
 
   const size = (radius * 2) + Math.max(valueWidth, trackWidth);

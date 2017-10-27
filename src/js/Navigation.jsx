@@ -10,7 +10,7 @@ import { stateToProps } from './utilities';
 import { toggleNavigation } from './utilities/ui';
 import { getGroups, getEntityIcon, getEntityById, entityIsHidden } from './utilities/ha';
 
-import Icon from './Icon';
+import Icon from './partials/Icon';
 
 function Navigation({ connection, config, entities }) {
   const haLocation = config.get('location_name');

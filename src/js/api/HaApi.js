@@ -95,12 +95,14 @@ function handleEventSubscription(dispatch) {
 
     if (type === 'state_changed' && message.event.data.new_state) {
       return dispatch({
-        type: 'UPDATE_ENTITY_STATE',
+        type: 'UPDATE_ENTITY',
         data: {
           newState: message.event.data.new_state,
         },
       });
     }
+
+    return null;
   };
 }
 
@@ -129,6 +131,52 @@ export function getConfig(url, password) {
     .catch(err => console.log(err));
 }
 
+
+// Reload Core Config
+export function reloadCoreConfig() {
+  return (dispatch, getState) => {
+    getState()
+      .connection.get('websocket')
+      .send({
+        type: 'call_service',
+        domain: 'homeassistant',
+        service: 'reload_core_config',
+        service_data: {},
+      });
+  };
+}
+
+
+// Reload Groups
+export function reloadGroupConfig() {
+  return (dispatch, getState) => {
+    getState()
+      .connection.get('websocket')
+      .send({
+        type: 'call_service',
+        domain: 'group',
+        service: 'reload',
+        service_data: {},
+      });
+  };
+}
+
+
+// Reload Automation
+export function reloadAutomationConfig() {
+  return (dispatch, getState) => {
+    getState()
+      .connection.get('websocket')
+      .send({
+        type: 'call_service',
+        domain: 'automation',
+        service: 'reload',
+        service_data: {},
+      });
+  };
+}
+
+
 export function toggleEntityState(entity) {
   return (dispatch, getState) => {
     dispatch({
@@ -141,7 +189,6 @@ export function toggleEntityState(entity) {
     getState()
       .connection.get('websocket')
       .send({
-        id: 2,
         type: 'call_service',
         domain,
         service: 'toggle',
@@ -162,7 +209,7 @@ export function setSliderValue(entity, value) {
       .send({
         type: 'call_service',
         domain,
-        service: 'select_value',
+        service: 'set_value',
         service_data: {
           value,
           entity_id: entity.entity_id,

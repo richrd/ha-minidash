@@ -1,15 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-//import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
-//import { Record, List, Map } from 'immutable';
-import { stateToProps } from './utilities';
 import { tryConnect } from './state/actions/connection';
 
 import { toggleNavigation } from './utilities/ui';
 
-import Icon from './Icon';
+import Icon from './partials/Icon';
 import ConnectionIndicator from './ConnectionIndicator';
 import Navigation from './Navigation';
 
@@ -20,7 +17,6 @@ function HeaderBar() {
         <button className="btn-plain h-100" alt="Menu" onClick={toggleNavigation} >
           <Icon name="menu" />
         </button>
-        <span className="current-view"></span>
         <ConnectionIndicator />
       </div>
       <Navigation />

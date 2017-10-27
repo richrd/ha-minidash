@@ -10,7 +10,7 @@ import { getEntitiesInGroup } from './utilities/ha';
 import EntityTiles from './EntityTiles';
 
 
-function GroupView({ entities, match }) {
+function GroupView({ entities, match }) { // eslint-disable-line
 
   const { groupId } = match.params;
   const groupEntities = getEntitiesInGroup(entities, groupId);

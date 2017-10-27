@@ -18,9 +18,7 @@ export default createReducer(new ConnectionState(), {
   },
 
 
-  SET_CONNECTION_STATUS: (state, data) => {
-    return state.set('status', data);
-  },
+  SET_CONNECTION_STATUS: (state, data) => state.set('status', data),
 
 
   SUBSCRIBE_TO_EVENTS: (state, { callback }) => {

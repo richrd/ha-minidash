@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Record } from 'immutable';
 import { stateToProps } from './utilities';
 
-import Icon from './Icon';
+import Icon from './partials/Icon';
 
 
 function ConnectionIndicator({ connection }) {
