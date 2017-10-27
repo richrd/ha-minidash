@@ -2,9 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { BrowserRouter as Router, Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
-import { Record, List, Map } from 'immutable';
+import { List, Map } from 'immutable';
 import { stateToProps } from './utilities';
 
 import { toggleNavigation } from './utilities/ui';
@@ -12,7 +12,7 @@ import { getGroups, getEntityIcon, getEntityById, entityIsHidden } from './utili
 
 import Icon from './partials/Icon';
 
-function Navigation({ connection, config, entities }) {
+function Navigation({ config, entities }) {
   const haLocation = config.get('location_name');
 
   let groupEntities = [];
@@ -83,31 +83,30 @@ function Navigation({ connection, config, entities }) {
               </NavLink>
             </li>
             { window.config.debug ?
-            <li>
-              <NavLink to="/debug" activeClassName="active" onClick={toggleNavigation} >
-                <Icon name="bug" /><span>Debug</span>
-              </NavLink>
-            </li> : null }
+              <li>
+                <NavLink to="/debug" activeClassName="active" onClick={toggleNavigation} >
+                  <Icon name="bug" /><span>Debug</span>
+                </NavLink>
+              </li> : null }
 
           </ul>
         </div>
 
       </nav>
-      <div className="nav-backdrop" onClick={toggleNavigation} />
+      <div
+        className="nav-backdrop"
+        onClick={toggleNavigation}
+        role="button"
+        tabIndex="0"
+      />
     </div>
   );
 }
 
 Navigation.propTypes = {
-  connection: PropTypes.instanceOf(Record).isRequired,
   config: PropTypes.instanceOf(Map).isRequired,
   entities: PropTypes.instanceOf(List).isRequired,
 };
-
-//export default connect(
-//  stateToProps('connection', 'config', 'entities'),
-//  null,
-//)(Navigation);
 
 export default connect(
   stateToProps('connection', 'config', 'entities'),

@@ -9,7 +9,7 @@ import { haEntity } from '../utilities/propTypes';
 
 class EntityInputNumber extends Component {
   static propTypes = {
-    entity: haEntity,
+    entity: haEntity.isRequired,
     setEntityState: PropTypes.func.isRequired,
     setSliderValue: PropTypes.func.isRequired,
   };

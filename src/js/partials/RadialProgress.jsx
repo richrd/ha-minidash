@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 export default function RadialProgress({ value }) {
   let valueFormatted = parseInt(value, 10);
-  if (isNaN(valueFormatted)) {
+  if (Number.isNaN(valueFormatted)) {
     value = 0;
     valueFormatted = '-';
   }

@@ -16,6 +16,7 @@ import Root from './Root';
 
 
 const history = createHistory();
+console.log(history);
 const middleware = routerMiddleware(history);
 const store = createStore(
   combineReducers({

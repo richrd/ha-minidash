@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import EntityTile from './EntityTile';
 
+import { haEntity } from './utilities/propTypes';
 
 export default function EntityTiles({ entities }) {
   let tiles;
@@ -27,5 +28,5 @@ export default function EntityTiles({ entities }) {
 EntityTiles.defaultProps = {};
 
 EntityTiles.propTypes = {
-  entities: PropTypes.any.isRequired,
+  entities: PropTypes.arrayOf(haEntity).isRequired,
 };

@@ -46,6 +46,8 @@ function EntityTile({
       data-type={type}
       data-short-value={isShortValue}
       onClick={clickEntity}
+      role="button"
+      tabIndex="0"
     >
       <div className="tile-label">{entity.attributes.friendly_name}</div>
 
@@ -89,7 +91,7 @@ function EntityTile({
 EntityTile.defaultProps = {};
 
 EntityTile.propTypes = {
-  entity: haEntity.isRequired,
+  entity: haEntity.isRequired, // eslint-disable-line
   toggle: PropTypes.func.isRequired,
 };
 

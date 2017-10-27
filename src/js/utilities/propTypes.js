@@ -1,6 +1,6 @@
 
 function createRequiredPropType(validator) {
-  return function (props, propName, componentName) {
+  return function requredValidator(props, propName, componentName) {
     if (props[propName] == null) {
       throw new Error(`Prop '${propName}' is required but wasn't specified!`);
     }

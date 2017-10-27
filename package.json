@@ -28,7 +28,8 @@
   },
   "scripts": {
     "build": "NODE_ENV=protuction webpack --p",
-    "dev": "webpack-dev-server --hot --open --history-api-fallback"
+    "dev": "webpack-dev-server --hot --open --history-api-fallback",
+    "lint": "eslint --ext js,jsx src/ webpack*"
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",

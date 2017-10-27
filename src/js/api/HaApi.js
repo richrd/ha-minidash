@@ -90,7 +90,7 @@ export class HaWebsocket {
 
 
 function handleEventSubscription(dispatch) {
-  return function (message) {
+  return function handleSub(message) {
     const type = message.event && message.event.event_type;
 
     if (type === 'state_changed' && message.event.data.new_state) {

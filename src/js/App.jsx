@@ -10,6 +10,10 @@ import HeaderBar from './HeaderBar';
 class App extends Component {
   static propTypes = {
     tryConnect: PropTypes.func.isRequired,
+    children: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.node),
+      PropTypes.node,
+    ]).isRequired,
   };
 
   constructor(props) {

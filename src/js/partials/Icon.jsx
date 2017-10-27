@@ -7,7 +7,7 @@ export default function Icon({ name, size }) {
 
 
 Icon.defaultProps = {
-  size: '24',  // 18, 24, 36, 48
+  size: '24', // 18, 24, 36, 48
 };
 
 

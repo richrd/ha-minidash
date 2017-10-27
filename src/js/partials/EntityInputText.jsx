@@ -37,10 +37,11 @@ class EntityInputText extends Component {
     const { entity } = this.props;
 
     return (
-        <textarea
-          value={entity.state}
-          className="flex-stretch"
-          onChange={this.setValue} />
+      <textarea
+        value={entity.state}
+        className="flex-stretch"
+        onChange={this.setValue}
+      />
     );
   }
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router';
-// import { connect } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
+import PropTypes from 'prop-types';
 
 import App from './App';
 import InfoView from './InfoView';
@@ -9,7 +9,7 @@ import GroupView from './GroupView';
 import StateView from './StateView';
 
 
-function Root({ history }) {
+function Root({ history }) { // eslint-disable-line
   const WrappedRoute = ({ component: Component, ...rest }) => (
     <Route
       {...rest}
@@ -20,6 +20,12 @@ function Root({ history }) {
       )}
     />
   );
+  WrappedRoute.propTypes = {
+    component: PropTypes.oneOfType([
+      PropTypes.instanceOf(React.Component).isRequired,
+      PropTypes.func.isRequired,
+    ]).isRequired,
+  };
 
   return (
     <ConnectedRouter history={history}>
