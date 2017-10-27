@@ -12,7 +12,10 @@
     "browser": true,
   },
   "rules": {
-    "no-console": "off",
-    "no-param-reassign": 0
+    "no-console": 0,
+    "no-param-reassign": 0,
+    "jsx-ally": {
+      "click-events-have-key-events": 0
+    }
   }
 }
