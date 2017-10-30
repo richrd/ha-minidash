@@ -17,7 +17,7 @@ class EntityInputText extends Component {
   constructor(props) {
     super(props);
 
-    this.debounce = 1000;
+    this.debounce = 1500;
     this.timeout = null;
   }
 
