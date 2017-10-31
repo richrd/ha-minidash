@@ -11,18 +11,19 @@ import createHistory from 'history/createBrowserHistory';
 import entitiesReducer from './state/reducers/entities';
 import connectionReducer from './state/reducers/connection';
 import configReducer from './state/reducers/config';
+import headerReducer from './state/reducers/header';
 
 import Root from './Root';
 
 
 const history = createHistory();
-console.log(history);
 const middleware = routerMiddleware(history);
 const store = createStore(
   combineReducers({
     entities: entitiesReducer,
     connection: connectionReducer,
     config: configReducer,
+    header: headerReducer,
   }),
   applyMiddleware(middleware),
   applyMiddleware(ReduxThunk),

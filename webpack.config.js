@@ -1,4 +1,5 @@
 // Builtins
+const fs = require('fs');
 const path = require('path');
 
 // Externals
@@ -13,6 +14,14 @@ const paths = {
   JS: path.resolve(__dirname, 'src/js'),
   CSS: path.resolve(__dirname, 'src/css'),
 };
+
+
+// Helper for getting the version from package.json
+function getPackageVersion() {
+  const pkgJson = fs.readFileSync('./package.json');
+  const { version } = JSON.parse(pkgJson);
+  return JSON.stringify(version);
+}
 
 
 exports.fonts = {
@@ -56,6 +65,9 @@ module.exports = {
       template: path.join(paths.SRC, 'index.html'),
       inject: 'body',
       filename: 'index.html',
+    }),
+    new webpack.DefinePlugin({
+      __PKG_VERSION__: getPackageVersion(),
     }),
   ],
 
