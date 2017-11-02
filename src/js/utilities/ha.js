@@ -56,10 +56,39 @@ export function entityIsGroup(entity) {
 }
 
 
+export function entityIsRoom(entity) {
+  return entity.entity_id.startsWith('group.room_');
+}
+
+
 export function getGroups(entities) {
   const groups = [];
   entities.forEach((item) => {
     if (entityIsGroup(item)) {
+      groups.push(item);
+    }
+  });
+
+  return groups;
+}
+
+
+export function getGroupsWithoutRooms(entities) {
+  const groups = [];
+  entities.forEach((item) => {
+    if (entityIsGroup(item) && !entityIsRoom(item)) {
+      groups.push(item);
+    }
+  });
+
+  return groups;
+}
+
+
+export function getRoomGroups(entities) {
+  const groups = [];
+  entities.forEach((item) => {
+    if (entityIsRoom(item)) {
       groups.push(item);
     }
   });

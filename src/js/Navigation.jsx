@@ -3,33 +3,45 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { NavLink } from 'react-router-dom';
-
 import { List, Map } from 'immutable';
-import { stateToProps } from './utilities';
 
+import { stateToProps } from './utilities';
 import { toggleNavigation } from './utilities/ui';
-import { getGroups, getEntityIcon, getEntityById, entityIsHidden } from './utilities/ha';
+import {
+  getGroups,
+  getRoomGroups,
+  getEntityIcon,
+  getEntityById,
+  entityIsHidden,
+  entityIsRoom,
+} from './utilities/ha';
 
 import Icon from './partials/Icon';
+
+const sortEntities = (a, b) => {
+  if (a.entity_id < b.entity_id) { return -1; }
+  if (a.entity_id > b.entity_id) { return 1; }
+  return 0;
+};
 
 function Navigation({ config, entities }) {
   const haLocation = config.get('location_name');
 
   let groupEntities = [];
+
   if (!window.config.groups) {
-    groupEntities = getGroups(entities)
-      .sort((a, b) => {
-        if (a.entity_id < b.entity_id) { return -1; }
-        if (a.entity_id > b.entity_id) { return 1; }
-        return 0;
-      });
+    groupEntities = getGroups(entities).sort(sortEntities);
   } else {
     window.config.groups.forEach((id) => {
       groupEntities.push(getEntityById(entities, `group.${id}`));
     });
+    groupEntities = groupEntities.concat(getRoomGroups(entities).sort(sortEntities));
   }
 
+
+  const configGroups = window.config.groups ? window.config.groups : [];
   const groupNavItems = [];
+  const roomNavItems = [];
 
   groupEntities.forEach((entity) => {
     if (!entity) {
@@ -48,12 +60,18 @@ function Navigation({ config, entities }) {
           </NavLink>
         </li>
       );
-      groupNavItems.push(el);
+      if (entityIsRoom(entity)) {
+        roomNavItems.push(el);
+      } else if (!configGroups.length) {
+        groupNavItems.push(el);
+      } else if (configGroups.includes(entity.entity_id.split('.')[1])) {
+        groupNavItems.push(el);
+      }
     }
   });
 
   return (
-    <div id="navigation">
+    <div id="navigation" className="left">
 
       <nav className="nav-menu">
 
@@ -72,6 +90,12 @@ function Navigation({ config, entities }) {
             </li>
 
             {groupNavItems}
+
+            {roomNavItems.length ?
+              <li className="header">
+                <h2>Rooms</h2>
+              </li> : null}
+            {roomNavItems.length ? roomNavItems : null}
 
             <li className="header">
               <h2>Tools</h2>

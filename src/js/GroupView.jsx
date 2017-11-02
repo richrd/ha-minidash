@@ -22,7 +22,6 @@ class GroupView extends Component {
 
   constructor(props) {
     super(props);
-    console.log(props.entities);
     this.setHeader(props.entities, props.match.params.groupId);
   }
 
