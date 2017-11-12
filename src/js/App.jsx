@@ -4,13 +4,21 @@ import PropTypes from 'prop-types';
 
 import { stateToProps } from './utilities';
 import { tryConnect } from './state/actions/connection';
-import { openNavigation, closeNavigation } from './utilities/ui';
+import { openNavigation, closeNavigation, toggleNavigation } from './utilities/ui';
 
 import HeaderBar from './HeaderBar';
 import SwipeContainer from './partials/SwipeContainer';
 
 
-function onSwipe(angle, distance, start, end) {
+const onKeyDown = (evt) => {
+  const key = evt.key.toLowerCase();
+  // Trigger nav with m (m for menu)
+  if (key === 'm') {
+    toggleNavigation();
+  }
+};
+
+const onSwipe = (angle, distance, start, end) => {
   // Minimum swipe distance
   const minDistance = 50;
   // Maximum angle compared to x axis
@@ -33,7 +41,7 @@ function onSwipe(angle, distance, start, end) {
   if (Math.abs(angle) <= maxAngle) {
     action();
   }
-}
+};
 
 class App extends Component {
   static propTypes = {
@@ -49,6 +57,10 @@ class App extends Component {
     this.connect();
   }
 
+  componentDidMount() {
+    this.parentElement.focus();
+  }
+
   connect() {
     console.log('Connect...');
     this.props.tryConnect(
@@ -57,16 +69,23 @@ class App extends Component {
     );
   }
 
+
   render() {
     return (
-      <SwipeContainer
-        onSwipe={onSwipe}
+      <div
+        onKeyDown={onKeyDown}
+        ref={(parent) => { this.parentElement = parent; }}
+        tabIndex="-1"
       >
-        <HeaderBar />
-        <main id="component-container">
-          {this.props.children}
-        </main>
-      </SwipeContainer>
+        <SwipeContainer
+          onSwipe={onSwipe}
+        >
+          <HeaderBar />
+          <main id="component-container">
+            {this.props.children}
+          </main>
+        </SwipeContainer>
+      </div>
     );
   }
 }
