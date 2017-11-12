@@ -177,6 +177,21 @@ export function reloadAutomationConfig() {
 }
 
 
+// Restart Home Assistant
+export function restartHA() {
+  return (dispatch, getState) => {
+    getState()
+      .connection.get('websocket')
+      .send({
+        type: 'call_service',
+        domain: 'homeassistant',
+        service: 'restart',
+        service_data: {},
+      });
+  };
+}
+
+
 export function toggleEntityState(entity) {
   return (dispatch, getState) => {
     dispatch({

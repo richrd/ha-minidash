@@ -7,6 +7,9 @@ import { List, Map } from 'immutable';
 
 import { stateToProps } from './utilities';
 import { toggleNavigation } from './utilities/ui';
+import { reloadCoreConfig, reloadGroupConfig, reloadAutomationConfig, restartHA } from './api/HaApi';
+
+
 import {
   getGroups,
   getRoomGroups,
@@ -24,7 +27,14 @@ const sortEntities = (a, b) => {
   return 0;
 };
 
-function Navigation({ config, entities }) {
+function Navigation({
+  config,
+  entities,
+  reloadCoreConfig: reloadCore,
+  reloadGroupConfig: reloadGroup,
+  reloadAutomationConfig: reloadAutomation,
+  restartHA: restart,
+}) {
   const haLocation = config.get('location_name');
 
   let groupEntities = [];
@@ -102,10 +112,32 @@ function Navigation({ config, entities }) {
             </li>
 
             <li>
+              <button onClick={() => { toggleNavigation(); reloadCore(); }} >
+                <Icon name="settings" /><span>Reload Core</span>
+              </button>
+            </li>
+            <li>
+              <button onClick={() => { toggleNavigation(); reloadGroup(); }} >
+                <Icon name="view-list" /><span>Reload Groups</span>
+              </button>
+            </li>
+            <li>
+              <button onClick={() => { toggleNavigation(); reloadAutomation(); }} >
+                <Icon name="playlist-play" /><span>Reload Automation</span>
+              </button>
+            </li>
+            <li>
+              <button onClick={() => { toggleNavigation(); restart(); }} >
+                <Icon name="restart" /><span>Restart HA</span>
+              </button>
+            </li>
+
+            <li>
               <NavLink to="/info" activeClassName="active" onClick={toggleNavigation} >
                 <Icon name="information-outline" /><span>Info</span>
               </NavLink>
             </li>
+
             { window.config.debug ?
               <li>
                 <NavLink to="/debug" activeClassName="active" onClick={toggleNavigation} >
@@ -130,11 +162,20 @@ function Navigation({ config, entities }) {
 Navigation.propTypes = {
   config: PropTypes.instanceOf(Map).isRequired,
   entities: PropTypes.instanceOf(List).isRequired,
+  reloadCoreConfig: PropTypes.func.isRequired,
+  reloadGroupConfig: PropTypes.func.isRequired,
+  reloadAutomationConfig: PropTypes.func.isRequired,
+  restartHA: PropTypes.func.isRequired,
 };
 
 export default connect(
   stateToProps('connection', 'config', 'entities'),
-  null,
+  {
+    reloadCoreConfig,
+    reloadGroupConfig,
+    reloadAutomationConfig,
+    restartHA,
+  },
   null,
   { pure: false },
 )(Navigation);
