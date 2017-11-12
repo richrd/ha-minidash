@@ -8,6 +8,7 @@ import { openNavigation, closeNavigation, toggleNavigation } from './utilities/u
 
 import HeaderBar from './HeaderBar';
 import SwipeContainer from './partials/SwipeContainer';
+import NotificationBubble from './partials/NotificationBubble';
 
 
 const onKeyDown = (evt) => {
@@ -76,6 +77,7 @@ class App extends Component {
         onKeyDown={onKeyDown}
         ref={(parent) => { this.parentElement = parent; }}
         tabIndex="-1"
+        role="button"
       >
         <SwipeContainer
           onSwipe={onSwipe}
@@ -85,6 +87,7 @@ class App extends Component {
             {this.props.children}
           </main>
         </SwipeContainer>
+        <NotificationBubble />
       </div>
     );
   }

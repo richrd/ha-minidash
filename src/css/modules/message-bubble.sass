@@ -1,0 +1,25 @@
+.message-bubbles
+  position: absolute
+  left: 0
+  right: 0
+  bottom: $sizer*4
+  text-align: center
+  z-index: 1000
+  pointer-events: none
+  opacity: 0
+  transition: opacity 1s ease-in-out
+
+.message-bubbles.show
+  opacity: 1
+  transition: opacity 1s ease-in-out
+
+.message-bubble
+  pointer-events: all
+  display: inline-block
+  margin: 0 auto
+  padding: $sizer $sizer*2
+  min-width: 150px
+  border-radius: 100px
+  text-align: center
+  background: $color-bubble-background
+  color: $color-bubble-foreground
