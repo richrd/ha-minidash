@@ -5,14 +5,15 @@
     position: absolute
     top: 0
     bottom: 0
+    left: #{$nav-width * -1}
     background-color: $color-panel-background
     overflow: hidden
     display: flex
     flex-direction: column
-
-    transition: transform .2s ease-in-out
-    transform: translate(#{$nav-width * -1}, 0)
     z-index: 11
+
+    transform: translate(0, 0)
+    transition: transform .2s ease-in-out
 
     .nav-top
       flex-shrink: 0
@@ -52,12 +53,22 @@
             margin: 0
             padding: 0
 
-        a
+        a, button
           display: flex
           align-items: center
+          width: 100%
           padding: $sizer*2 $sizer
+          background: transparent
+          color: inherit
+          font-size: inherit
           border-bottom: 1px solid $color-panel-border
           border-left: 4px solid transparent
+          outline: 0
+
+          &:focus, &:hover
+            //color: $color-foreground
+            color: lighten($color-foreground, 20)
+            border-left: 4px solid lighten($color-foreground, 10)
 
           &.active
             color: $color-highlight-text
@@ -86,10 +97,11 @@
 
 .navigation-open #navigation
   .nav-menu
-    transition: transform .2s ease-in-out
-    transform: translate(0, 0)
+    transform: translate(#{$nav-width * 1}, 0)
+    transition: transform .2s
 
   .nav-backdrop
     pointer-events: all
     opacity: .7
     transition: opacity .2s ease-in-out
+    transition-delay: 0s
