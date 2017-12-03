@@ -41,6 +41,7 @@ module.exports = {
       path.join(paths.JS, 'index.jsx'),
       path.join(paths.CSS, 'index.sass'),
       'mdi/css/materialdesignicons.css',
+      'weather-underground-icons/dist/wu-icons-style.css',
     ],
   },
 
@@ -100,7 +101,7 @@ module.exports = {
         ],
       },
       {
-        test: /\.(eot|svg|ttf|woff|woff2)$/,
+        test: /\.(eot|svg|ttf|woff|woff2|png)$/,
         loader: 'file-loader?name=[name].[ext]',
       },
     ],

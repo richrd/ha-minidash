@@ -118,3 +118,13 @@ export function getEntitiesInGroup(entities, groupId) {
   }
   return getEntitiesByIds(entities, group.attributes.entity_id);
 }
+
+
+export function getWundergroundIconName(entity) {
+  if (entity.attributes.entity_picture && entity.attributes.entity_picture.includes('icons.wxug.com')) {
+    let iconName = entity.attributes.entity_picture.split('/').pop().split('.')[0];
+    iconName = iconName.startsWith('nt_') ? iconName.substr(3) : iconName;
+    return iconName;
+  }
+  return null;
+}

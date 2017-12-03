@@ -147,11 +147,12 @@
       min-height: calc(#{$tile-height} * 3 + #{$tile-grid-gap} * 2)
 
 
-    &[data-type='input_number'],
-    &[data-type='input_text']
+    &[data-type='input_number']
       grid-column: span 2
 
-    &[data-type='input_text']
+    &[data-type='input_text'],
+    &[data-entity-id^='sensor.pws_weather_']
+      grid-column: span 2
       grid-row: span 2
       min-height: calc(#{$tile-height} * 2 + #{$tile-grid-gap})
 
