@@ -14,8 +14,16 @@ import NotificationBubble from './partials/NotificationBubble';
 const onKeyDown = (evt) => {
   const key = evt.key.toLowerCase();
   // Trigger nav with m (m for menu)
-  if (key === 'm') {
-    toggleNavigation();
+  // Close it with escape
+  switch (key) {
+    case 'm':
+      toggleNavigation();
+      break;
+    case 'escape':
+      closeNavigation();
+      break;
+    default:
+      break;
   }
 };
 
@@ -58,8 +66,12 @@ class App extends Component {
     this.connect();
   }
 
-  componentDidMount() {
-    this.parentElement.focus();
+  componentWillMount() {
+    document.addEventListener('keydown', onKeyDown, false);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', onKeyDown, false);
   }
 
   connect() {
@@ -73,12 +85,7 @@ class App extends Component {
 
   render() {
     return (
-      <div
-        onKeyDown={onKeyDown}
-        ref={(parent) => { this.parentElement = parent; }}
-        tabIndex="-1"
-        role="button"
-      >
+      <div>
         <SwipeContainer
           onSwipe={onSwipe}
         >
