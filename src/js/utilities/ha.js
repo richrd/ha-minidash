@@ -13,6 +13,7 @@ export function getEntityDomain(entity) {
 
 
 export function getEntityIconWithState(entity) {
+  console.log(entity);
   const switchTypes = ['switch', 'input_boolean'];
 
   let icon = 'checkbox-blank';
@@ -20,18 +21,32 @@ export function getEntityIconWithState(entity) {
   const type = entity.entity_id.split('.')[0];
 
   if (entity.attributes.icon) {
+    // Get provided icon and use an appropriate variant if available
     [, icon] = entity.attributes.icon.split(':');
+    if (icon === 'led-off' && entity.state === 'on') {
+      icon = 'led-on';
+    }
   } else if (switchTypes.includes(type)) {
+    // Switch on/off icons
     icon = 'toggle-switch-off';
     if (entity.state === 'on') {
       icon = 'toggle-switch';
     }
   } else if (entity.entity_id.startsWith('light.')) {
+    // Light on/off icons
     icon = 'lightbulb';
     if (entity.state === 'on') {
       icon = 'lightbulb-on';
     }
+  /*
+  } else if (entity.attributes.device_class && entity.attributes.device_class === 'opening') {
+    // Opening icons
+    if (entity.entity_id.includes('door')) {
+      return entity.state === 'off' ? 'door-closed' : 'door-open';
+    }
+    */
   }
+
 
   return icon;
 }
