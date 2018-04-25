@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { toggleEntityState, setSliderValue } from './api/HaApi';
+import { toggleEntityState, setSliderValue, runEntityScript } from './api/HaApi';
 import {
   entityIsToggleable,
+  entityIsScript,
   getEntityIconWithState,
   getWundergroundIconName,
 } from './utilities/ha';
@@ -20,7 +21,7 @@ import AngleGauge from './partials/AngleGauge';
 import EntityInputNumber from './partials/EntityInputNumber';
 import EntityInputText from './partials/EntityInputText';
 
-function EntityTile({ entity, toggle }) {
+function EntityTile({ entity, toggle, runScript }) {
   if (!entity) {
     return null;
   }
@@ -37,8 +38,13 @@ function EntityTile({ entity, toggle }) {
 
 
   const clickEntity = () => {
+    // Toggle
     if (entityIsToggleable(entity)) {
       toggle(entity);
+    }
+    // Run script
+    if (entityIsScript(entity)) {
+      runScript(entity);
     }
   };
 
@@ -120,10 +126,12 @@ EntityTile.defaultProps = {};
 EntityTile.propTypes = {
   entity: haEntity.isRequired, // eslint-disable-line
   toggle: PropTypes.func.isRequired,
+  runScript: PropTypes.func.isRequired,
 };
 
 export default connect(null, {
   toggle: toggleEntityState,
+  runScript: runEntityScript,
   setSlider: setSliderValue,
   setState: setEntityState,
 })(EntityTile);

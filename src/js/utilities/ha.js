@@ -13,7 +13,6 @@ export function getEntityDomain(entity) {
 
 
 export function getEntityIconWithState(entity) {
-  console.log(entity);
   const switchTypes = ['switch', 'input_boolean'];
 
   let icon = 'checkbox-blank';
@@ -73,6 +72,11 @@ export function entityIsGroup(entity) {
 
 export function entityIsRoom(entity) {
   return entity.entity_id.startsWith('group.room_');
+}
+
+
+export function entityIsScript(entity) {
+  return getEntityDomain(entity) === 'script';
 }
 
 

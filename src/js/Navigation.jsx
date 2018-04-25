@@ -57,26 +57,32 @@ function Navigation({
     if (!entity) {
       return;
     }
-    if (!entityIsHidden(entity)) {
-      const icon = getEntityIcon(entity);
-      const groupName = entity.entity_id.split('.')[1];
-      const el = (
-        <li key={entity.entity_id}>
-          <NavLink to={`/group/${groupName}`} onClick={toggleNavigation} activeClassName="active">
-            <Icon name={icon} />
-            <span>
-              {entity.attributes.friendly_name}
-            </span>
-          </NavLink>
-        </li>
-      );
-      if (entityIsRoom(entity)) {
-        roomNavItems.push(el);
-      } else if (!configGroups.length) {
-        groupNavItems.push(el);
-      } else if (configGroups.includes(entity.entity_id.split('.')[1])) {
-        groupNavItems.push(el);
-      }
+    // If no custom config is defined don't show hidden entities
+    if (!window.config.groups && entityIsHidden(entity)) {
+      return;
+    }
+
+    const icon = getEntityIcon(entity);
+    const groupName = entity.entity_id.split('.')[1];
+    const el = (
+      <li key={entity.entity_id}>
+        <NavLink to={`/group/${groupName}`} onClick={toggleNavigation} activeClassName="active">
+          <Icon name={icon} />
+          <span>
+            {entity.attributes.friendly_name}
+          </span>
+        </NavLink>
+      </li>
+    );
+    if (entityIsRoom(entity)) {
+      // If group is a room, add it to rooms
+      roomNavItems.push(el);
+    } else if (!configGroups.length) {
+      // If groups haven't been configured add all groups
+      groupNavItems.push(el);
+    } else if (configGroups.includes(entity.entity_id.split('.')[1])) {
+      // If groups have been configured only add the specified groups
+      groupNavItems.push(el);
     }
   });
 

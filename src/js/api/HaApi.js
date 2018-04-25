@@ -232,3 +232,21 @@ export function setSliderValue(entity, value) {
       });
   };
 }
+
+
+export function runEntityScript(entity) {
+  return (dispatch, getState) => {
+    const [domain] = entity.entity_id.split('.');
+
+    getState()
+      .connection.get('websocket')
+      .send({
+        type: 'call_service',
+        domain,
+        service: 'turn_on',
+        service_data: {
+          entity_id: entity.entity_id,
+        },
+      });
+  };
+}
