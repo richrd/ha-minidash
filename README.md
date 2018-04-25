@@ -65,3 +65,22 @@ window.config = {
 HA Minidash doesn't need to be separately installed. Just copy the contents of the `dist` directory
 to a director that is served by your HTTP server and add the `config.js` file to that folder.
 
+## Developing
+
+First install the project packages:
+```
+npm install
+```
+
+In the public folder copy `config.example.js` to `config.js` and edit how you wish.
+
+After this you can run the app in developement mode with live reloading:
+```
+npm run dev
+```
+
+To make a production build run the following command (the build will be created in the `dist` folder):
+```
+npm run build
+```
+
