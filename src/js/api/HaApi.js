@@ -118,8 +118,8 @@ export function subscribeToAllEvents() {
 }
 
 
-export function getBootstrap(url, password) {
-  return fetch(`${url}/api/bootstrap?api_password=${password}`)
+export function getStates(url, password) {
+  return fetch(`${url}/api/states?api_password=${password}`)
     .then(res => res.json())
     .catch(err => console.log(err));
 }
