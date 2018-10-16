@@ -1,4 +1,4 @@
-.progress-circle
+.svg-widget
   position: relative
   display: flex
   align-items: center
@@ -12,17 +12,36 @@
     bottom: 0
     z-index: 1
 
-  .progress-svg
-    transform: rotate(-90deg)
-
-    .track,
+  svg
     .value
-      fill: none
+      stroke: $color-highlight
 
     .track
       stroke: $color-background
 
-    .value
-      stroke: $color-highlight
-      stroke-linecap: round
-      transition: stroke-dashoffset .3s ease-in-out
+  &.radial-progress
+    svg
+      transform: rotate(-90deg)
+
+      .track,
+      .value
+        fill: none
+
+      .value
+        stroke-linecap: round
+        transition: stroke-dashoffset .3s ease-in-out
+
+  &.angle-gauge
+    svg
+      .track,
+      .value
+        fill: none
+
+      .value
+        stroke-linecap: round
+        stroke-width: 3
+        transition: transform .3s ease-in-out
+
+      .step
+        stroke: transparentize($color-tile-foreground, 0.75)
+        stroke-width: 2

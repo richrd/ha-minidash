@@ -2,8 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { toggleEntityState, setSliderValue } from './api/HaApi';
-import { entityIsToggleable, getEntityIconWithState } from './utilities/ha';
+import { toggleEntityState, setSliderValue, runEntityScript } from './api/HaApi';
+import {
+  entityIsToggleable,
+  entityIsScript,
+  getEntityIconWithState,
+  getWundergroundIconName,
+} from './utilities/ha';
 
 import { setEntityState } from './state/actions/entities';
 
@@ -12,10 +17,11 @@ import { haEntity } from './utilities/propTypes';
 
 import Icon from './partials/Icon';
 import RadialProgress from './partials/RadialProgress';
+import AngleGauge from './partials/AngleGauge';
 import EntityInputNumber from './partials/EntityInputNumber';
 import EntityInputText from './partials/EntityInputText';
 
-function EntityTile({ entity, toggle }) {
+function EntityTile({ entity, toggle, runScript }) {
   if (!entity) {
     return null;
   }
@@ -32,8 +38,13 @@ function EntityTile({ entity, toggle }) {
 
 
   const clickEntity = () => {
+    // Toggle
     if (entityIsToggleable(entity)) {
       toggle(entity);
+    }
+    // Run script
+    if (entityIsScript(entity)) {
+      runScript(entity);
     }
   };
 
@@ -45,12 +56,32 @@ function EntityTile({ entity, toggle }) {
     }
   };
 
+
+  let content = null;
+
+  if (unit === '%') {
+    content = (<RadialProgress value={entity.state} />);
+  } else if (unit === '°') {
+    content = (<AngleGauge value={entity.state} />);
+  } else {
+    content = (
+      <div>
+        <div className="tile-value">{entity.state}</div>
+        <div className="tile-unit">{unit}</div>
+      </div>
+    );
+  }
+
+  // Get the weather symbol if available
+  const wundergroundIcon = getWundergroundIconName(entity);
+
   return (
     <div
       className="entity-tile"
       title={entity.attributes.friendly_name}
       data-state={entity.state}
       data-type={type}
+      data-entity-id={entity.entity_id}
       data-short-value={isShortValue}
       onClick={clickEntity}
       onKeyPress={keyPress}
@@ -59,16 +90,12 @@ function EntityTile({ entity, toggle }) {
     >
       <div className="tile-label">{entity.attributes.friendly_name}</div>
 
+      { wundergroundIcon ? <i className={`wu wu-white wu-64 wu-${wundergroundIcon}`} /> : null }
+
       { type === 'sensor' ?
         <div className="tile-content">
           <div className="tile-state">
-            { unit === '%' ?
-              <RadialProgress value={entity.state} /> :
-              <div>
-                <div className="tile-value">{entity.state}</div>
-                <div className="tile-unit">{unit}</div>
-              </div>
-            }
+            { content }
           </div>
         </div> : null }
 
@@ -99,10 +126,12 @@ EntityTile.defaultProps = {};
 EntityTile.propTypes = {
   entity: haEntity.isRequired, // eslint-disable-line
   toggle: PropTypes.func.isRequired,
+  runScript: PropTypes.func.isRequired,
 };
 
 export default connect(null, {
   toggle: toggleEntityState,
+  runScript: runEntityScript,
   setSlider: setSliderValue,
   setState: setEntityState,
 })(EntityTile);

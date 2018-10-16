@@ -118,8 +118,8 @@ export function subscribeToAllEvents() {
 }
 
 
-export function getBootstrap(url, password) {
-  return fetch(`${url}/api/bootstrap?api_password=${password}`)
+export function getStates(url, password) {
+  return fetch(`${url}/api/states?api_password=${password}`)
     .then(res => res.json())
     .catch(err => console.log(err));
 }
@@ -177,6 +177,21 @@ export function reloadAutomationConfig() {
 }
 
 
+// Restart Home Assistant
+export function restartHA() {
+  return (dispatch, getState) => {
+    getState()
+      .connection.get('websocket')
+      .send({
+        type: 'call_service',
+        domain: 'homeassistant',
+        service: 'restart',
+        service_data: {},
+      });
+  };
+}
+
+
 export function toggleEntityState(entity) {
   return (dispatch, getState) => {
     dispatch({
@@ -212,6 +227,24 @@ export function setSliderValue(entity, value) {
         service: 'set_value',
         service_data: {
           value,
+          entity_id: entity.entity_id,
+        },
+      });
+  };
+}
+
+
+export function runEntityScript(entity) {
+  return (dispatch, getState) => {
+    const [domain] = entity.entity_id.split('.');
+
+    getState()
+      .connection.get('websocket')
+      .send({
+        type: 'call_service',
+        domain,
+        service: 'turn_on',
+        service_data: {
           entity_id: entity.entity_id,
         },
       });

@@ -3,6 +3,11 @@
   "version": "0.0.1",
   "author": "Richard Lewis",
   "description": "Dasboard for Home Assistant.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/richrd/ha-minidash.git"
+  },
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.1",
@@ -27,7 +32,7 @@
     "url-loader": "^0.6.2"
   },
   "scripts": {
-    "build": "rm 'dist/app.'* && NODE_ENV=protuction webpack --p",
+    "build": "(rm 'dist/app.'* || true) && NODE_ENV=protuction webpack --p",
     "dev": "webpack-dev-server --hot --open --history-api-fallback",
     "lint": "eslint --ext js,jsx src/ webpack*"
   },
@@ -45,6 +50,7 @@
     "react-router-dom": "^4.2.2",
     "react-router-redux": "^5.0.0-alpha.6",
     "redux": "^3.7.2",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "weather-underground-icons": "^1.0.0"
   }
 }

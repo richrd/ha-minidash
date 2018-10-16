@@ -1,6 +1,6 @@
 import { List } from 'immutable';
 
-import { HaWebsocket, getBootstrap, getConfig, subscribeToAllEvents } from '../../api/HaApi';
+import { HaWebsocket, getStates, getConfig, subscribeToAllEvents } from '../../api/HaApi';
 
 
 export function setWebsocket(websocket, password) {
@@ -10,11 +10,11 @@ export function setWebsocket(websocket, password) {
   };
 }
 
-function bootstrapLoaded(data) {
+function statesLoaded(data) {
   return (dispatch) => {
     dispatch({
       type: 'SET_ENTITIES',
-      data: List(data.states),
+      data: List(data),
     });
   };
 }
@@ -62,7 +62,7 @@ export function tryConnect(url, password = null) {
 
     try {
       await dispatch(setWebsocket(connection, password));
-      await dispatch(bootstrapLoaded(await getBootstrap(url, password)));
+      await dispatch(statesLoaded(await getStates(url, password)));
       await dispatch(configLoaded(await getConfig(url, password)));
       await dispatch(subscribeToAllEvents());
     } catch (e) {

@@ -14,17 +14,17 @@ export default function RadialProgress({ value }) {
 
   const size = (radius * 2) + Math.max(valueWidth, trackWidth);
   const center = size / 2;
-  const cicumference = 2 * Math.PI * radius;
+  const circumference = 2 * Math.PI * radius;
 
   const valueStyle = {
-    strokeDashoffset: cicumference * (1 - (value / 100)),
-    strokeDasharray: cicumference,
+    strokeDashoffset: circumference * (1 - (value / 100)),
+    strokeDasharray: circumference,
   };
 
   return (
-    <div className="progress-circle">
+    <div className="svg-widget radial-progress">
       <span className="value flex-center">{valueFormatted}</span>
-      <svg className="progress-svg" width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
         <circle className="track" cx={center} cy={center} r={radius} strokeWidth={trackWidth} />
         <circle className="value" cx={center} cy={center} r={radius} strokeWidth={valueWidth} style={valueStyle} />
       </svg>
