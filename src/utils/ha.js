@@ -111,11 +111,11 @@ export function getEntityIconWithState(entity) {
       icon = "lightbulb-on";
     }
 
-    // } else if (entity.attributes.device_class && entity.attributes.device_class === 'opening') {
-    //  // Opening icons
-    //  if (entity.entity_id.includes('door')) {
-    //    return entity.state === 'off' ? 'door-closed' : 'door-open';
-    //  }
+    } else if (entity.attributes.device_class && entity.attributes.device_class === 'opening') {
+      // Opening icons
+      if (entity.entity_id.includes('door')) {
+        return entity.state === 'off' ? 'door-closed' : 'door-open';
+      }
   }
 
   return icon;
