@@ -40,6 +40,7 @@ new Vue({
           this.ha.makeRequest("get_states");
           this.ha.makeRequest("get_config");
         } else if (type === "auth_invalid") {
+          this.ha.disconnect();
           this.$store.commit("setAuthStatus", "auth_invalid");
         } else if (type === "event") {
           this.handleHaEvent(data);

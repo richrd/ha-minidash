@@ -1,5 +1,5 @@
 <template>
-  <div class="settings px-1 py-1">
+  <div class="settings px-2 py-1">
     <form @submit.prevent="save">
       <h2>Home Assistant</h2>
       <div class="form-item">
@@ -10,8 +10,7 @@
         <label for="password">API Password</label>
         <input id="password" type="password" v-model="editableSettings.password"/>
       </div>
-      <br>
-      <h2>User Interface</h2>
+
       <div class="form-item checkbox">
         <div class="input">
           <input id="showRooms" type="checkbox" v-model="editableSettings.showRooms"/>
@@ -60,7 +59,10 @@
     label, .input
       width: auto
       display: inline-block
-
+    label
+      padding-left: $sizer/2
+    .input
+      padding-right: $sizer/2
   button
     width: 100%
 
@@ -97,6 +99,15 @@
 </style>
 
 <script>
+/*
+TODO: prompt for automatic default settings
+
+It looks like you haven't been here before.
+Would you like to laod default settings for:
+- hass.io  -> http://hassio.local:8123
+- hassbian -> http://hassbian:8123
+*/
+
 import { mapState } from "vuex";
 
 export default {

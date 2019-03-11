@@ -12,6 +12,7 @@ class HaApi {
     this.msgId = 1;
     this.eventCallback = null;
     this.resultCallback = null;
+    // Mapping of message id to message type for pending requests
     this.pendingRequests = [];
   }
 
@@ -26,22 +27,26 @@ class HaApi {
   }
 
   connect() {
-    this.shouldReconnect = true;
-    this.triggerEvent("connection_status", "connecting");
+    this.debugLog("CONNECT");
 
     const [apiProtocol, domain] = this.apiUrl.split("://");
     const wsProtocol = apiProtocol === "https" ? "wss" : "ws";
     const wsUrl = `${wsProtocol}://${domain}/api/websocket`;
+
+    this.triggerEvent("connection_status", "connecting");
     this.socket = new WebSocket(wsUrl);
 
+
     this.socket.onopen = () => {
-      this.debugLog("onopen");
+      this.debugLog("ONOPEN");
+      this.shouldReconnect = true;
       this.triggerEvent("connection_status", "connected");
     };
 
     this.socket.onclose = () => {
-      this.debugLog("onclose");
+      this.debugLog("ONCLOSE");
       this.triggerEvent("connection_status", "disconnected");
+      this.reconnect();
     };
 
     this.socket.onmessage = (event) => {
@@ -59,8 +64,7 @@ class HaApi {
           this.debugLog("Authentication failed!");
           this.triggerEvent("auth_invalid");
         } else if (message.type === "result") {
-          this.triggerResult(this.latestRequestType(), message.result);
-          this.pendingRequests.shift();
+          this.handleResult(message);
         } else if (message.type === "event") {
           this.triggerEvent("event", message);
         }
@@ -68,7 +72,8 @@ class HaApi {
     };
 
     this.socket.onerror = (event) => {
-      this.debugLog("ERROR", event);
+      this.debugLog("ONERROR", event);
+      this.shouldReconnect = true;
       this.triggerEvent("connection_status", "disconnected");
       this.reconnect();
     };
@@ -76,22 +81,42 @@ class HaApi {
 
   reconnect() {
     if (this.shouldReconnect) {
+      this.debugLog("RECONNECT");
+      clearTimeout(this.reconnectTimeout);
       this.reconnectTimeout = setTimeout(() => {
         try {
           this.connect();
         } catch (e) {
-          console.warn("Reconnecting failed...");
+          this.debugLog("Reconnecting failed...");
         }
       }, this.reconnectDelay);
     }
   }
 
   disconnect() {
+    this.debugLog("DISCONNECT");
     clearTimeout(this.reconnectTimeout);
     this.shouldReconnect = false;
     if (this.socket) {
       this.socket.close();
     }
+  }
+
+  send(obj, sendId = true) {
+    let messageId = null;
+    if (sendId) {
+      messageId = this.msgId;
+      obj.id = this.msgId;
+    }
+    try {
+      this.socket.send(JSON.stringify(obj));
+      this.debugLog("SENT:", obj);
+    } catch (e) {
+      console.warn("Unable to send  to socket!", e);
+    }
+
+    this.msgId = this.msgId + 1;
+    return messageId;
   }
 
   authorize() {
@@ -104,23 +129,19 @@ class HaApi {
     );
   }
 
-  latestRequestType() {
-    return this.pendingRequests.length ? this.pendingRequests[0] : null;
+  handleResult(message) {
+    // When a result comes in, get its type and forward it
+    const resultType = this.pendingRequests[message.id];
+    if (resultType) {
+      this.triggerResult(resultType, message.result);
+      delete this.pendingRequests[message.id];
+    }
   }
 
   subscribeToEvents() {
     this.send({
       type: "subscribe_events",
     });
-  }
-
-  send(obj, sendId = true) {
-    this.debugLog("SENT:", obj);
-    if (sendId) {
-      obj.id = this.msgId;
-      this.msgId = this.msgId + 1;
-    }
-    this.socket.send(JSON.stringify(obj));
   }
 
   triggerEvent(type, data) {
@@ -154,10 +175,10 @@ class HaApi {
   }
 
   makeRequest(type) {
-    this.pendingRequests.push(type);
-    this.send({
+    const id = this.send({
       type,
     });
+    this.pendingRequests[id] = type;
   }
 
   toggleEntity(entity) {

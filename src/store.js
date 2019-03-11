@@ -17,9 +17,9 @@ export default new Vuex.Store({
       title: "",
     },
     settings: {
-      // The domain and port of your HA instance
+      // The domain and port of the HA instance
       apiUrl: "",
-      // The password for your HA instance, leave empty if you don't use a password
+      // The password for the HA instance (optional)
       password: "",
       // Show room groups separately in the menu
       showRooms: true,
@@ -55,6 +55,10 @@ export default new Vuex.Store({
 
     // HA Entities
     setEntities(state, data) {
+      if (!Array.isArray(data)) {
+        console.error("Trying to assign non-array to entities!");
+        return;
+      }
       state.entities = data;
     },
     updateEntity(state, data) {

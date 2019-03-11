@@ -4,11 +4,14 @@
     :class="{ 'navigation-open': navOpen }"
     @keydown.escape="closeNav"
     @keyup.77="openNav"
+    tabindex="-1"
   >
       <SwipeContainer :on-swipe="onSwipe">
         <HeaderBar title="Yolo" icon="flash" />
         <main id="component-container">
-          <router-view />
+          <div id="component-wrapper">
+            <router-view />
+          </div>
         </main>
         <NotificationBubble />
       </SwipeContainer>
@@ -48,6 +51,10 @@ body, html
   bottom: 0
   overflow-y: auto
   overflow-x: hidden
+  z-index: 0
+
+#component-wrapper
+  padding-bottom: 100px
 </style>
 
 <script type="text/javascript">
