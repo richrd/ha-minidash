@@ -11,7 +11,7 @@
 
 <style lang="sass">
 .message-bubbles
-  position: absolute
+  position: fixed
   left: 0
   right: 0
   bottom: $sizer*4
@@ -29,7 +29,7 @@
   transition: opacity 1s ease-in-out
 
 .message-bubble
-  pointer-events: all
+  pointer-events: none
   display: inline-block
   margin: $sizer/2 auto
   padding: $sizer $sizer*2

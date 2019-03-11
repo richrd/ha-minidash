@@ -92,7 +92,7 @@
   .nav-menu
     border-right: 1px solid $color-panel-border
     width: $nav-width
-    position: absolute
+    position: fixed
     top: 0
     bottom: 0
     left: #{$nav-width * -1}
@@ -100,7 +100,7 @@
     overflow: hidden
     display: flex
     flex-direction: column
-    z-index: 11
+    z-index: 1500
 
     transform: translate(0, 0)
     transition: transform .2s ease-in-out
@@ -176,7 +176,7 @@
 
 
   .nav-backdrop
-    position: absolute
+    position: fixed
     top: 0
     left: 0
     right: 0

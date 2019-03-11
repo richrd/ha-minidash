@@ -20,10 +20,14 @@
 
             <RadialProgress
               v-if="unit=='%'"
-              :value="entity.state" />
+              :value="entity.state"
+            />
+
             <AngleGauge
               v-else-if="unit === '°'"
-              :value="entity.state" />
+              :value="entity.state"
+            />
+
             <div v-else>
               <div class="tile-value">{{ entity.state }}</div>
               <div class="tile-unit">{{ unit }}</div>
@@ -89,7 +93,7 @@ export default {
 
       // Run script
       if (entityIsScript(this.entity)) {
-        haApi.runScript(this.entity);
+        haApi.runEntityScript(this.entity);
       }
     },
   },

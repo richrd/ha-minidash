@@ -12,14 +12,6 @@
 export default {
   name: "radial-progress",
   data() {
-    let { value } = this;
-    let valueFormatted = parseInt(value, 10);
-
-    if (Number.isNaN(valueFormatted)) {
-      value = 0;
-      valueFormatted = "-";
-    }
-
     const radius = 28;
     const trackWidth = 2;
     const valueWidth = 3;
@@ -28,20 +20,26 @@ export default {
     const center = size / 2;
     const circumference = 2 * Math.PI * radius;
 
-    const valueStyle = {
-      strokeDashoffset: circumference * (1 - (value / 100)),
-      strokeDasharray: circumference,
-    };
-
     return {
-      valueFormatted,
       size,
       center,
       radius,
+      circumference,
       trackWidth,
-      valueStyle,
       valueWidth,
     };
+  },
+  computed: {
+    valueFormatted() {
+      const valueFormatted = parseInt(this.value, 10);
+      return Number.isNaN(valueFormatted) ? "-" : valueFormatted;
+    },
+    valueStyle() {
+      return {
+        strokeDashoffset: this.circumference * (1 - (this.value / 100)),
+        strokeDasharray: this.circumference,
+      };
+    },
   },
   props: {
     value: [Number, String],

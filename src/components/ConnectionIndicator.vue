@@ -1,12 +1,17 @@
 <template>
-  <div :class="`status-${connectionStatus} ${className()}`">
+  <button
+    :class="`h-100 status-${connectionStatus} ${className()}`"
+    @click="resetConnection"
+    title="Reconnect"
+  >
     <Icon :name="iconName()" />
-  </div>
+  </button>
 </template>
 
 <script>
 import { mapState } from "vuex";
 import Icon from "@/components/Icon.vue";
+import haApi from "../api/HaApi";
 
 export default {
   name: "connection-indicator",
@@ -19,6 +24,10 @@ export default {
     },
     className() {
       return this.connectionStatus === "connecting" ? "pulse-opacity" : "";
+    },
+    resetConnection() {
+      haApi.disconnect();
+      haApi.connect();
     },
   },
   computed: {

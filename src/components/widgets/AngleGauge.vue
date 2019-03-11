@@ -16,42 +16,40 @@
 export default {
   name: "angle-gauge",
   data() {
-    let { value } = this;
-    let valueFormatted = parseInt(value, 10);
-
-    if (Number.isNaN(valueFormatted)) {
-      value = 0;
-      valueFormatted = "-";
-    }
-
     const radius = 30;
     const trackWidth = 10;
     const size = (radius * 2) + trackWidth;
     const center = size / 2;
     const circumference = Math.PI * radius;
-    const gapWidth = circumference * 0.075;
-    const dashWidth = circumference * 0.025;
-
-    const trackStyle = {
-      strokeDashoffset: 1.2,
-      strokeDasharray: `${dashWidth}, ${gapWidth}`,
-    };
-
-    const lineStyle = {
-      transform: `rotate(${value}deg)`,
-      transformOrigin: `${center}px ${center}px`,
-    };
 
     return {
-      valueFormatted,
       size,
       center,
       radius,
       trackWidth,
-      trackStyle,
       circumference,
-      lineStyle,
     };
+  },
+  computed: {
+    valueFormatted() {
+      const valueFormatted = parseInt(this.value, 10);
+      return Number.isNaN(valueFormatted) ? "-" : valueFormatted;
+    },
+    lineStyle() {
+      return {
+        transform: `rotate(${this.value}deg)`,
+        transformOrigin: `${this.center}px ${this.center}px`,
+      };
+    },
+    trackStyle() {
+      const dashWidth = this.circumference * 0.025;
+      const gapWidth = this.circumference * 0.075;
+
+      return {
+        strokeDashoffset: 1.2,
+        strokeDasharray: `${dashWidth}, ${gapWidth}`,
+      };
+    },
   },
   props: {
     value: [Number, String],

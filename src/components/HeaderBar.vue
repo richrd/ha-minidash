@@ -6,8 +6,8 @@
       </button>
 
       <div class="header-label d-flex">
-        <div v-if="icon" class="mr-1"><Icon :name="header['icon']" /></div>
-        <span>{{ header["title"] }}</span>
+        <div v-if="icon" class="mr-1"><Icon :name="header.icon" /></div>
+        <span>{{ header.title }}</span>
       </div>
 
       <ConnectionIndicator />
@@ -22,6 +22,7 @@
 
 #header-bar
   position: fixed
+  z-index: 600
   top: 0
   left: 0
   right: 0
