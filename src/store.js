@@ -23,6 +23,8 @@ export default new Vuex.Store({
       password: "",
       // Show room groups separately in the menu
       showRooms: true,
+      // Show room groups separately in the menu
+      defaultGroup: "",
       // Debug mode on by default
       debug: false,
     },

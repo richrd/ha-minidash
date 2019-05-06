@@ -16,6 +16,7 @@ new Vue({
     settings.setDefaults(this.$store.state.settings);
     settings.load();
     this.$store.commit("setSettings", settings.getSettings());
+    this.$root.$emit("settingsLoaded");
 
     if (this.settings.apiUrl) {
       this.setupConnection();

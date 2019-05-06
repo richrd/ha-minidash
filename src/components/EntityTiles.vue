@@ -13,7 +13,7 @@
     -webkit-tap-highlight-color: rgba(255, 255, 255, 0)
     background-color: $color-tile-background
 
-    padding: .4em /* TODO: use sixer */
+    padding: .4em /* TODO: use sizer */
 
     text-align: center
     cursor: pointer

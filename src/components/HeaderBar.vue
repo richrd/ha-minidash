@@ -35,6 +35,7 @@
   padding: 0 $sizer-x
 
   border-bottom: 1px solid $color-panel-border
+
 </style>
 
 <script>

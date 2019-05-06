@@ -1,6 +1,7 @@
 <template>
   <div class="settings px-2 py-1">
     <form @submit.prevent="save">
+
       <h2>Home Assistant</h2>
       <div class="form-item">
         <label for="apiUrl">API URL</label>
@@ -10,7 +11,18 @@
         <label for="password">API Password</label>
         <input id="password" type="password" v-model="editableSettings.password"/>
       </div>
+      <br>
 
+      <h2>User Interface</h2>
+      <div class="form-item">
+        <label for="defaultGroup">Default Group</label>
+        <select id="defaultGroup" v-model="editableSettings.defaultGroup">
+          <option value=""></option>
+          <option v-for="option in groupOptions" :value="option.id" :key="option.id">
+            {{ option.name }}
+          </option>
+        </select>
+      </div>
       <div class="form-item checkbox">
         <div class="input">
           <input id="showRooms" type="checkbox" v-model="editableSettings.showRooms"/>
@@ -20,6 +32,7 @@
         </label>
       </div>
       <br>
+
       <h2>Other</h2>
       <div class="form-item checkbox">
         <div class="input">
@@ -108,7 +121,7 @@ Would you like to laod default settings for:
 - hassbian -> http://hassbian:8123
 */
 
-import { mapState } from "vuex";
+import { mapGetters, mapState } from "vuex";
 
 export default {
   name: "info",
@@ -141,6 +154,15 @@ export default {
     icon: String,
     title: String,
   },
-  computed: mapState(["settings"]),
+  computed: {
+    groupOptions() {
+      return this.getGroups.map(group => ({
+        id: group.entity_id.substr(6),
+        name: group.attributes.friendly_name,
+      }));
+    },
+    ...mapGetters(["getGroups"]),
+    ...mapState(["settings"]),
+  },
 };
 </script>
